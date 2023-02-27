@@ -11,7 +11,15 @@ class CustomErrorHandler extends Error {
     }
 
     static wrongCredentials(message = 'username or password invalid') {
-        return CustomErrorHandler(409, message);
+        return new CustomErrorHandler(409, message);
+    }
+
+    static unAuthorized(message = 'unauthorized') {
+        return new CustomErrorHandler(409, message);
+    }
+
+    static notFound(message = '404 not found') {
+        return new CustomErrorHandler(404, message);
     }
 }
 

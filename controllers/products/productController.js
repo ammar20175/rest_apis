@@ -111,6 +111,24 @@ const productController = {
 
         });
 
+    },
+    async destory(req, res, next) {
+
+        const document = await Product.findOneAndDelete({ _id: req.params.id });
+
+        if (!document) {
+            return next(new Error('nothing to delete'));
+        }
+
+        const imagePath = document.image;
+
+        fs.unlink(`${appRoot}/${imagePath}`, (err) => {
+            if (err) {
+                return next(CustomErrorHandler.serverError());
+            }
+        });
+        
+        res.json(document)
     }
 }
 

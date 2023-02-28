@@ -120,15 +120,40 @@ const productController = {
             return next(new Error('nothing to delete'));
         }
 
-        const imagePath = document.image;
-
+        const imagePath = document._doc.image;
+        // console.log(imagePath)
+        
         fs.unlink(`${appRoot}/${imagePath}`, (err) => {
             if (err) {
                 return next(CustomErrorHandler.serverError());
             }
+            res.json(document);
         });
-        
-        res.json(document)
+
+    },
+    async index(req, res, next) {
+        let documents;
+
+        //if we have large number of products then we should use pagination and best will be to use moongoose-pagination libaray
+
+        try {
+
+            documents = await Product.find().select('-updatedAt -__v');
+
+        } catch (err) {
+            return next(CustomErrorHandler.serverError());
+        }
+
+        return res.json(documents)
+    },
+    async single(req, res, next) {
+        let document
+        try {
+            document = await Product.findOne({ _id: req.params.id }).select('-updatedAt -__v');
+        } catch (err) {
+            return next(CustomErrorHandler.serverError())
+        }
+        return res.json(document)
     }
 }
 

@@ -21,7 +21,7 @@ app.use(express.json());
 app.use('/api', router);
 
 
-
+app.use('/uploads',express.static('public'))
 //middleware for errors.It must be in the last
 app.use(errorHandler);
 

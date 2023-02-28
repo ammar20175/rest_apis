@@ -6,5 +6,6 @@ export const {
     DEBUG_MODE,
     MONGO_CONNECTION_URL,
     JWT_KEY,
-    REFRESH_TOKEN
+    REFRESH_TOKEN,
+    APP_URL
 } = process.env
